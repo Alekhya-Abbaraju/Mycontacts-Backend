@@ -40,9 +40,21 @@ const updateContact = asyncHandler(async (req, res) => {
 const createContact = asyncHandler(async (req, res) => {
     const { name, email, phone } = req.body;
     if (!name || !email || !phone) {
+<<<<<<< HEAD
         res.status(400);
         res.json({ error: "All fields are mandatory!" });
         return;
+=======
+        res.status(400).json({ error: "All fields are mandatory!" });
+        return;
+    }
+    try {
+        const contact = await Contact.create({ name, email, phone });
+        res.status(201).json(contact);
+    } catch (error) {
+        console.error("Error creating contact:", error);
+        res.status(500).json({ error: "Could not create contact" });
+>>>>>>> 40d51a5dd7c96ade2be9a7cd847e0a1c6ee0f33e
     }
     const contact = await Contact.create({ name, email, phone,user_id:req.user.id});
     res.status(201).json(contact);
